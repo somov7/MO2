@@ -31,10 +31,11 @@ def jordan(D, r, c):
 def simplex(D, indep, dep):
     rows, cols = D.shape
     while True:
-        ans = np.zeros(rows + cols - 2)
+        ans = [0] * (rows + cols - 2)
         for i in range(len(indep)):
             ans[indep[i]] = D[i, -1]
-        print(ans, D[-1, -1])   
+        ans = np.around(ans, decimals=3)
+        print(ans, D[-1, -1].round(decimals=3), sep='\t')   
         pivotCol = D[-1][:-1].argmin()
         if D[-1, pivotCol] >= 0:
             return ans, D[-1, -1]
@@ -55,18 +56,37 @@ def initial(A, B, C):
     cols = A.shape[1] + 1
     D = np.zeros(rows * cols).reshape(rows, cols)
     D[:-1, :-1] = A
-    D[:-1, -1] = B
+    D[:-1, -1] = B.T
     D[-1:, :-1] = C * -1
-    print(D)
     return D
 
+def readfile():
+    with open('C:\\Prog\\MO2\\input.txt') as f:
+        rows, cols = [int(x) for x in next(f).split()]
+        tmp = []
+        for i in range(rows):
+            line = next(f)
+            tmp.append([float(x) for x in line.split()])
+        A = np.asarray(tmp)
+        tmp.clear() 
+        for i in range(rows):
+            line = next(f)
+            tmp.append([float(x) for x in line.split()])
+        B = np.asarray(tmp)
+        line = next(f)
+        tmp.clear()
+        tmp.append(([float(x) for x in line.split()]))
+        C = np.asarray(tmp)
+    return A, B, C
 
-A = np.array(([1.0, -2.0], [-2.0, 1.0], [2.0, 1.0]))
-B = np.array([1.0, 2.0, 6.0]).T
-C = np.array([3.0, 1.0])
-#D = np.array(([1.0, -2.0, 1.0], [-2.0, 1.0, 2.0], [2.0, 1.0, 6.0], [-3.0, -1.0, 0.0]))
+class precision(float):
+    def __repr__(self):
+        return "%0.3f" % self
+
+A, B, C = readfile()
+rows, cols = A.shape
 D = initial(A, B, C)
-indep = [2, 3, 4]
-dep = [0, 1]
+dep = list(range(cols))
+indep = list(range(cols, rows + cols))
 ans, value = simplex(D, indep, dep)
 print(ans, value)
