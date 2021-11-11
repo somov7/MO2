@@ -6,6 +6,7 @@
       <mapping pattern="name" type="AUTO_DETECTED" />
       <mapping pattern="obj1" type="AUTO_DETECTED" />
       <mapping ext="bin" type="PLAIN_TEXT" />
+      <mapping ext="pyd" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
