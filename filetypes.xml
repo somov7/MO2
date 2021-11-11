@@ -1,6 +1,7 @@
 <application>
   <component name="FileTypeManager" version="18">
     <extensionMap>
+      <mapping pattern="encoded_main" type="AUTO_DETECTED" />
       <mapping pattern="abra" type="AUTO_DETECTED" />
       <mapping pattern="name" type="AUTO_DETECTED" />
       <mapping pattern="obj1" type="AUTO_DETECTED" />
